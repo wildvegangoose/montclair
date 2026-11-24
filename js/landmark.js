@@ -1,0 +1,119 @@
+/* Landmark pages: landmarks/<id>.html (and legacy landmark.html?id=<id>), plus landmarks.html */
+document.addEventListener("DOMContentLoaded", () => {
+  const MW = window.MW, esc = MW.esc;
+  const $ = s => document.querySelector(s);
+  const ROOT = document.body.dataset.root || "";
+  const id = document.body.dataset.landmark || new URLSearchParams(location.search).get("id");
+  const L = MW.landmarks || {};
+  const AGES = [["1888", "map", "USGS survey map"], ["1898", "map", "USGS survey map"], ["1906", "map", "USGS survey map"], ["1924", "map", "USGS survey map"],
+    ["1930", "aerial", "Aerial photograph"], ["1947", "map", "USGS topographic map"], ["1955", "map", "USGS topographic map"], ["1972", "map", "USGS topographic map"],
+    ["1995", "aerial", "Color-infrared aerial"], ["2007", "aerial", "Aerial photograph"], ["2020", "aerial", "Aerial photograph"]];
+  const link = s => typeof s === "string" ? (MW.sources[s] ? `<a href="${MW.sources[s].url}" target="_blank" rel="noopener">${esc(MW.sources[s].label)}</a>` : esc(s))
+    : `<a href="${s.url}" target="_blank" rel="noopener">${esc(s.label)}</a>`;
+
+  // ---------- index page ----------
+  if (document.body.dataset.page === "landmarks") {
+    const list = Object.entries(L).sort((a, b) => a[1].built - b[1].built);
+    $("#lmGrid").innerHTML = list.map(([k, v], i) => {
+      const cover = (v.photos && v.photos[0]) ? v.photos[0].src : `img/ages/${k}/2020-aerial.jpg`;
+      return `<a class="lm-card reveal d${i % 3}" href="landmarks/${k}.html">
+        <div class="lm-cover" style="background-image:url('${cover}')"><span class="lm-year">${esc(v.builtLabel || v.built)}</span></div>
+        <div class="lm-body"><span class="tag ${v.kind || "house"}">${esc(v.type)}</span><h3>${esc(v.name)}</h3><p class="small muted">📍 ${esc(v.address)}</p><p>${esc(v.tagline)}</p></div></a>`;
+    }).join("");
+    MW.observeReveals();
+    return;
+  }
+
+  const v = L[id];
+  if (!v) { $("#lm").innerHTML = `<section class="section"><div class="wrap"><h1>Landmark not found</h1><p><a href="${ROOT}landmarks.html">See all landmarks →</a></p></div></section>`; return; }
+  document.title = `${v.name} (${v.builtLabel || v.built}) — ${MW.town.name}, NJ Landmark · ${MW.town.siteTitle}`;
+  if (!document.body.dataset.landmark && MW.town && MW.town.siteUrl) {
+    let can = document.querySelector('link[rel="canonical"]');
+    if (!can) { can = document.createElement("link"); can.rel = "canonical"; document.head.append(can); }
+    can.href = `${MW.town.siteUrl}landmarks/${id}.html`;
+  }
+  const hero = (v.photos && v.photos.find(p => p.hero)) || (v.photos && v.photos[0]);
+  const ages = AGES.map(([y, kind, label]) => ({ y: +y, kind, label, src: `${ROOT}img/ages/${id}/${y}-${kind}.jpg` }));
+
+  $("#lm").innerHTML = `
+  <header class="lm-hero" style="${hero ? `background-image:url('${ROOT}${hero.src}')` : `background-image:url('${ROOT}img/ages/${id}/1930-aerial.jpg')`}">
+    <div class="lm-hero-shade"></div>
+    <div class="wrap lm-hero-in">
+      <a class="back" href="${ROOT}landmarks.html">← All landmarks</a>
+      <div class="eyebrow">${esc(v.type)} · ${esc(v.builtLabel || String(v.built))}</div>
+      <h1>${esc(v.name)}</h1>
+      <p class="lede">${esc(v.tagline)}</p>
+      <div class="lm-meta"><span>📍 ${esc(v.address)}${v.approx ? " (map position approximate)" : ""}</span>${v.designation ? `<span>🏛 ${esc(v.designation)}</span>` : ""}${v.architect ? `<span>✏️ ${esc(v.architect)}</span>` : ""}</div>
+      ${hero ? `<p class="hero-credit">${esc(hero.caption || "")} ${hero.credit ? `· ${esc(hero.credit)}` : ""}${hero.license ? ` · ${esc(hero.license)}` : ""}</p>` : ""}
+    </div>
+  </header>
+
+  <section class="section lm-story">
+    <div class="wrap lm-grid">
+      <article class="lm-text">
+        ${v.sections.map(s => `<section class="reveal"><h2>${esc(s.h)}</h2>${s.p.map(p => `<p>${esc(p)}</p>`).join("")}</section>`).join("")}
+        ${v.facts && v.facts.length ? `<section class="reveal"><h2>Did you know?</h2><ul class="lm-facts">${v.facts.map(f => `<li>${esc(f)}</li>`).join("")}</ul></section>` : ""}
+      </article>
+      <aside class="lm-side">
+        <div class="card lm-tl reveal"><h3>Timeline</h3><ol>${v.timeline.map(t => `<li><b>${esc(String(t.y))}</b><span>${esc(t.t)}</span></li>`).join("")}</ol></div>
+        <div class="card reveal"><h3>On the map</h3><div id="lmMap" class="lm-map"></div>
+          <p class="small"><a href="${v.place ? `${ROOT}explore.html?place=${v.place}&year=${Math.max(1888, v.built)}` : `${ROOT}explore.html`}">Open in Explore the Map →</a> · <a href="${ROOT}house.html?q=${encodeURIComponent(v.address.split(/[(;]/)[0] + MW.town.geocodeSuffix)}">House story →</a></p></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section ages-sec">
+    <div class="wrap">
+      <div class="eyebrow">Through the ages</div>
+      <h2 class="reveal">The same spot, ${ages[0].y}–${ages[ages.length - 1].y}</h2>
+      <p class="muted reveal">Dated survey maps and aerial photographs, all centered on ${esc(v.name)}. Drag the slider or click a year. The marker shows the landmark.</p>
+      <div class="ages reveal">
+        <div class="ages-frame">${ages.map((a, i) => `<img src="${a.src}" alt="${a.label}, ${a.y}" data-i="${i}" class="${i ? "" : "on"}" loading="${i < 2 ? "eager" : "lazy"}" onerror="this.dataset.missing=1">`).join("")}
+          <div class="ages-pin"></div><div class="ages-label" id="agesLabel"></div></div>
+        <input type="range" id="agesRange" min="0" max="${ages.length - 1}" value="0" aria-label="Choose a year">
+        <div class="ages-years">${ages.map((a, i) => `<button data-i="${i}">${a.y}</button>`).join("")}</div>
+      </div>
+      <p class="small muted">Maps: U.S. Geological Survey historical topographic maps (public domain). Aerials: New Jersey Office of GIS.</p>
+    </div>
+  </section>
+
+  ${v.photos && v.photos.length ? `<section class="section photos-sec"><div class="wrap">
+    <div class="eyebrow">Pictures</div><h2 class="reveal">${esc(v.name)} in photographs</h2>
+    <div class="photo-grid">${v.photos.map((p, i) => `<figure class="ph reveal d${i % 3}"><a href="${p.link || (ROOT + p.src)}" target="_blank" rel="noopener"><img src="${ROOT + p.src}" alt="${esc(p.caption || v.name)}" loading="lazy"></a>
+      <figcaption>${p.year ? `<b>${esc(String(p.year))}</b> · ` : ""}${esc(p.caption || "")}<span class="credit">${esc(p.credit || "")}${p.license ? ` · ${esc(p.license)}` : ""}</span></figcaption></figure>`).join("")}</div>
+    ${v.photoLinks && v.photoLinks.length ? `<p class="small muted" style="margin-top:1rem">More historic photos (viewable at their source): ${v.photoLinks.map(link).join(" · ")}</p>` : ""}
+  </div></section>` : ""}
+
+  ${v.clippings && v.clippings.length ? `<section class="section"><div class="wrap"><div class="eyebrow">From the archive</div><h2 class="reveal">In the news</h2>
+    <div class="news-grid">${v.clippings.map(c => `<a class="clip reveal" href="${c.src}" target="_blank" rel="noopener"><span class="doc-year">${c.year}</span><img src="${c.img.startsWith("http") ? c.img : ROOT + c.img}" alt="Clipping ${c.year}" loading="lazy"><span class="doc-cap">${esc(c.caption || "Archive, " + c.year)}</span></a>`).join("")}</div></div></section>` : ""}
+
+  ${(() => { const m = v.address.match(/^(\d+)\S*\s+([A-Za-z. ]+?)(?:\s*[(,]|$)/); const h = m && MW.sanbornHTML ? MW.sanbornHTML(m[1], m[2], { title: `${esc(v.name)} on the Sanborn maps` }) : ""; return h ? `<section class="section sanborn"><div class="wrap">${h}</div></section>` : ""; })()}
+
+  <section class="section lm-sources"><div class="wrap">
+    <h2>Sources</h2><ul>${v.sources.map(s => `<li>${link(s)}</li>`).join("")}</ul>
+    <p class="small muted">The narrative is our synthesis of the sources listed. Where sources disagree, the text says so.</p>
+  </div></section>`;
+
+  // map
+  if (window.L && v.lat) {
+    const m = window.L.map("lmMap", { zoomControl: false, scrollWheelZoom: false, attributionControl: true }).setView([v.lat, v.lon], 16);
+    window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "&copy; OpenStreetMap contributors", maxZoom: 19 }).addTo(m);
+    window.L.circleMarker([v.lat, v.lon], { radius: 10, color: "#fff", weight: 3, fillColor: "#b8381e", fillOpacity: 1 }).addTo(m);
+  }
+
+  // through-the-ages slider
+  const imgs = [...document.querySelectorAll(".ages-frame img")], range = $("#agesRange");
+  function show(i) {
+    imgs.forEach((im, k) => im.classList.toggle("on", k === i));
+    range.value = i;
+    $("#agesLabel").innerHTML = `<b>${ages[i].y}</b> · ${ages[i].label}`;
+    document.querySelectorAll(".ages-years button").forEach((b, k) => b.classList.toggle("on", k === i));
+  }
+  range.addEventListener("input", () => show(+range.value));
+  document.querySelectorAll(".ages-years button").forEach(b => b.onclick = () => show(+b.dataset.i));
+  imgs.forEach((im, k) => im.addEventListener("error", () => { document.querySelectorAll(".ages-years button")[k].disabled = true; }));
+  show(0);
+  let timer = setInterval(() => { const n = (+range.value + 1) % ages.length; show(n); }, 2600);
+  ["pointerdown", "keydown"].forEach(ev => document.querySelector(".ages").addEventListener(ev, () => clearInterval(timer), { once: true }));
+  MW.observeReveals();
+});

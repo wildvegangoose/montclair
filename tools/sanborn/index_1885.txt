@@ -1,0 +1,28 @@
+# Hand-transcribed street index for Sanborn Fire Insurance Map: Montclair, NJ (March 1885, 4 sheets)
+# Source: Library of Congress, https://www.loc.gov/item/sanborn05557_001/ (public domain)
+# Format: STREET|from-to|sheets|note
+# Note: 1885 downtown house numbers differed from 1907/modern numbering (e.g., Bloomfield Ave ran 501-793),
+# so ranges are left blank and every downtown street maps to its 1885 sheet(s) with a note.
+BLOOMFIELD AVENUE||1,2,3,4|1885 downtown numbering (501-793) and Wheeler's Mill on sheet 4
+CHURCH STREET||3|1885 numbering 101-123 (Presbyterian Church & Chapel)
+DEPOT STREET||2,4|Spring St / Depot Road (sheet 2) and NY&GL Depot St (sheet 4)
+ELM STREET||1|1885 numbering near Bloomfield Ave and Washington St
+FOREST STREET||4|1885 numbering 301-316 (near Crump's Label Co.)
+FULLERTON AVENUE||3|1885 numbering 17-26 (South Fullerton Ave)
+SOUTH FULLERTON AVENUE||3|1885 numbering 17-26
+GLENRIDGE AVENUE||2,3|Shown as "Old Road to Bloomfield" in 1885 (701-711, 801-816)
+GROVE STREET||2|1885 numbering 201-218 (DL&W tracks & Harrison Steam Mill)
+HARTLEY STREET||1|1885 numbering 14-27 (Montclair House)
+LABEL STREET||4|1885 numbering 201-217 (Crump's Label Co.)
+LEVY STREET||1|Off Bloomfield Ave (near Elm St)
+MAPLE PLACE||3|1885 numbering 101-109
+MIDLAND AVENUE||3|1885 numbering 15-26
+NEW STREET||1|1885 numbering 201-219
+PARK STREET||3|1885 numbering 201-205
+SPRING STREET||2|1885 numbering 401-410 (Spring St or Depot Road)
+VALLEY ROAD||3|1885 numbering 101-128 (Montclair Public School, Mansion House)
+WALNUT STREET||4|Opposite Crump's Label Co. and NY&GL Railroad Depot
+WASHINGTON STREET||1|1885 numbering 101-117
+WILLOW STREET||2|1885 numbering 301-318 (Skating Rink, Sutphen's Livery)
+NORTH WILLOW STREET||2|Shown as Willow St in 1885 (301-318)
+SOUTH WILLOW STREET||2|Shown as Willow St in 1885 (301-318)

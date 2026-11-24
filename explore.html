@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interactive Historic Maps of Montclair, NJ (1888–2020) · Montclair Through Time</title>
+  <meta name="description" content="Compare 1888–1972 USGS survey maps, 1930–2020 aerial photos, historic boundaries and 54 documented places in Montclair, NJ.">
+  <!-- seo:head:start -->
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://wildvegangoose.github.io/montclair/explore.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Montclair Through Time">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:title" content="Interactive Historic Maps of Montclair, NJ (1888–2020) · Montclair Through Time">
+  <meta property="og:description" content="Compare 1888–1972 USGS survey maps, 1930–2020 aerial photos, historic boundaries and 54 documented places in Montclair, NJ.">
+  <meta property="og:url" content="https://wildvegangoose.github.io/montclair/explore.html">
+  <meta property="og:image" content="https://wildvegangoose.github.io/montclair/img/landmarks/crane-house.jpg">
+  <meta property="og:image:alt" content="Israel Crane House (1796), Montclair, New Jersey">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Interactive Historic Maps of Montclair, NJ (1888–2020) · Montclair Through Time">
+  <meta name="twitter:description" content="Compare 1888–1972 USGS survey maps, 1930–2020 aerial photos, historic boundaries and 54 documented places in Montclair, NJ.">
+  <meta name="twitter:image" content="https://wildvegangoose.github.io/montclair/img/landmarks/crane-house.jpg">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebApplication","name":"Interactive Historic Maps of Montclair, NJ (1888–2020) · Montclair Through Time","url":"https://wildvegangoose.github.io/montclair/explore.html","applicationCategory":"ReferenceApplication","operatingSystem":"All","description":"Compare 1888–1972 USGS survey maps, 1930–2020 aerial photos, historic boundaries and 54 documented places in Montclair, NJ."},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Montclair Through Time","item":"https://wildvegangoose.github.io/montclair/"},{"@type":"ListItem","position":2,"name":"Explore the Map","item":"https://wildvegangoose.github.io/montclair/explore.html"}]}]}</script>
+  <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token":"03a9b2df20a44828802f80f6401c4ec3"}'></script><!-- End Cloudflare Web Analytics -->
+  <!-- seo:head:end -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/explore.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23b8381e' d='M50 4l8 20 14-8-4 20 18-4-10 16 16 6-20 10 4 10-22-4-2 26h-4l-2-26-22 4 4-10-20-10 16-6-10-16 18 4-4-20 14 8z'/%3E%3C/svg%3E">
+</head>
+<body class="explore-page">
+<main class="explore">
+  <aside class="side">
+    <div class="side-head">
+      <div class="eyebrow">Explore the map</div>
+      <h1><span id="townName">Montclair</span> in <span id="bigYear">1914</span></h1>
+      <p class="town-sub small" id="townSub"></p>
+      <p class="muted small" id="eraLine"></p>
+    </div>
+    <div id="slider" class="side-slider"></div>
+    <form id="addrForm" class="addr" action="house.html">
+      <input type="search" name="q" placeholder="Search a Montclair address…" aria-label="Search a Montclair address">
+      <button class="btn" type="submit" aria-label="Tell this address's story">→</button>
+    </form>
+    <div class="jurbox" id="jurBox" aria-live="polite"></div>
+    <div class="histbox" id="histBox">
+      <div class="hb-head">
+        <label class="switch"><input type="checkbox" id="histToggle" checked><span class="track"><span class="knob"></span></span> Historic maps</label>
+        <span class="hb-name" id="histName"></span>
+      </div>
+      <div class="hb-fade"><span>Today</span><input type="range" id="histOpacity" min="0" max="100" value="100" aria-label="Blend between the historic map and today's map"><span>Then</span></div>
+      <div class="hb-years" id="histYears" aria-label="Jump to a map year"></div>
+      <p class="small muted hb-note" id="histNote"></p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="legend small muted">
+      <span><i class="lg on"></i>Standing / happening</span>
+      <span><i class="lg ghost"></i>Gone or ended</span>
+      <span><i class="lg road"></i>Historic road</span>
+      <span><i class="lg jur"></i>Boundary that year</span>
+      <span><i class="lg seat"></i>Seat of government</span>
+    </div>
+    <div class="list" id="list"><!-- seo:inner:list --><div class="li on"><span class="li-year">2012</span><span class="li-body"><strong>First Montclair Film Festival</strong><span class="small muted">5 Seymour Street (Wellmont Theater) &amp; Bloomfield Avenue</span></span></div><div class="li on"><span class="li-year">2002</span><span class="li-body"><strong>Montclair Connection &amp; Midtown Direct Open</strong><span class="small muted">Bay Street to Walnut Street junction</span></span></div><div class="li on"><span class="li-year">1981</span><span class="li-body"><strong>Bay Street Station Replaces Lackawanna Terminal</strong><span class="small muted">Bay Street &amp; Pine Street</span></span></div><div class="li on"><span class="li-year">1980</span><span class="li-body"><strong>Reclassified as Township of Montclair</strong><span class="small muted">Township-wide</span></span></div><div class="li on"><span class="li-year">1977</span><span class="li-body"><strong>Voluntary Magnet School System Launches</strong><span class="small muted">District-wide (22 Valley Road)</span></span></div><div class="li on"><span class="li-year">1969</span><span class="li-body"><strong>New Municipal Building Opens</strong><span class="small muted">205 Claremont Avenue</span></span></div><div class="li on"><span class="li-year">1955</span><span class="li-body"><strong>Montclair Public Library (South Fullerton)</strong><span class="small muted">50 South Fullerton Avenue</span></span></div><div class="li on"><span class="li-year">1950</span><span class="li-body"><strong>Overseas Neighbors &amp; Sister City Graz</strong><span class="small muted">Town-wide (Montclair–Graz)</span></span></div><div class="li on"><span class="li-year">1937</span><span class="li-body"><strong>Brookdale Park Completed</strong><span class="small muted">Watchung Avenue &amp; Grove Street</span></span></div><div class="li on"><span class="li-year">1933</span><span class="li-body"><strong>School Segregation Redistricting &amp; Parent Boycott</strong><span class="small muted">Glenfield School &amp; Nishuane neighborhood</span></span></div><div class="li on"><span class="li-year">1930</span><span class="li-body"><strong>The Anchorage</strong><span class="small muted">155 Wildwood Avenue</span></span></div><div class="li on"><span class="li-year">1930</span><span class="li-body"><strong>Edison Drives the First Electric Train</strong><span class="small muted">Lackawanna Terminal, 1 Lackawanna Plaza</span></span></div><div class="li on"><span class="li-year">1927</span><span class="li-body"><strong>Presby Memorial Iris Gardens</strong><span class="small muted">474 Upper Mountain Avenue</span></span></div><div class="li on"><span class="li-year">1922</span><span class="li-body"><strong>Wellmont Theater</strong><span class="small muted">5 Seymour Street</span></span></div><div class="li on"><span class="li-year">1920</span><span class="li-body"><strong>First Congregational Church</strong><span class="small muted">40–42 South Fullerton Avenue</span></span></div><div class="li on"><span class="li-year">1919</span><span class="li-body"><strong>Gilbreth House (&quot;Cheaper by the Dozen&quot;)</strong><span class="small muted">68 Eagle Rock Way</span></span></div><div class="li on"><span class="li-year">1916</span><span class="li-body"><strong>Van Vleck House &amp; Gardens</strong><span class="small muted">21 Van Vleck Street</span></span></div><div class="li on"><span class="li-year">1915</span><span class="li-body"><strong>Montclair High School (Chestnut Street)</strong><span class="small muted">100 Chestnut Street</span></span></div><div class="li on"><span class="li-year">1914</span><span class="li-body"><strong>Bellevue Avenue Branch Library</strong><span class="small muted">185 Bellevue Avenue</span></span></div><div class="li on"><span class="li-year">1914</span><span class="li-body"><strong>Montclair Art Museum</strong><span class="small muted">3 South Mountain Avenue</span></span></div><div class="li on"><span class="li-year">1913</span><span class="li-body"><strong>Lackawanna Railroad Terminal</strong><span class="small muted">1 Lackawanna Plaza</span></span></div><div class="li on"><span class="li-year">1912</span><span class="li-body"><strong>Montclair YWCA &amp; Black Civic Organizing</strong><span class="small muted">51 Elm Street &amp; Glenridge Avenue</span></span></div><div class="li on"><span class="li-year">1910</span><span class="li-body"><strong>Glenfield Park</strong><span class="small muted">Maple Avenue &amp; Bloomfield Avenue</span></span></div><div class="li on"><span class="li-year">1908</span><span class="li-body"><strong>Montclair State Normal School (College Hall)</strong><span class="small muted">1 Normal Avenue</span></span></div><div class="li on"><span class="li-year">1907</span><span class="li-body"><strong>Oakcroft Residential Park</strong><span class="small muted">Godfrey Road &amp; Princeton Place</span></span></div><div class="li on"><span class="li-year">1906</span><span class="li-body"><strong>Edgemont Memorial Park</strong><span class="small muted">274 Valley Road</span></span></div><div class="li on"><span class="li-year">1904</span><span class="li-body"><strong>Montclair Carnegie Library</strong><span class="small muted">73 Church Street</span></span></div><div class="li on"><span class="li-year">1904</span><span class="li-body"><strong>Municipal Building &amp; Police HQ</strong><span class="small muted">647 Bloomfield Avenue</span></span></div><div class="li on"><span class="li-year">1904</span><span class="li-body"><strong>Watchung Avenue Station</strong><span class="small muted">106 Watchung Avenue</span></span></div><div class="li on"><span class="li-year">1903</span><span class="li-body"><strong>Anderson Park</strong><span class="small muted">274 Bellevue Avenue</span></span></div><!-- /seo:inner:list --></div>
+  </aside>
+  <section class="mapwrap">
+    <div id="map" aria-label="Map of historic places in Montclair"></div>
+    <div class="map-badge" id="mapBadge"></div>
+  </section>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="data/boundary.js"></script>
+<script src="data/boundaries.js"></script>
+<script src="js/data.js"></script>
+<script src="js/landmarks-data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/explore.js"></script>
+</body>
+</html>

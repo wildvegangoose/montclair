@@ -1,0 +1,6 @@
+# Scratch/intermediate downloads and temporary processing caches (never commit)
+archive/_tmp/
+*.aux.xml
+__pycache__/
+*.pyc
+.DS_Store

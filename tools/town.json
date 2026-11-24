@@ -1,0 +1,193 @@
+{
+  "_comment": "Everything town-specific that the data tools need for Montclair Through Time. See docs/PLAYBOOK.md in south-orange.",
+  "name": "Montclair",
+  "state": "NJ",
+  "site_title": "Montclair Through Time",
+  "site_url": "https://wildvegangoose.github.io/montclair/",
+  "cloudflare_beacon_token": "03a9b2df20a44828802f80f6401c4ec3",
+  "og_image": "img/landmarks/crane-house.jpg",
+  "og_image_alt": "Israel Crane House (1796), Montclair, New Jersey",
+  "user_agent": "MontclairThroughTime-fansite-research/0.1 (personal, non-commercial; polite crawl)",
+  "bbox": {
+    "west": -74.2377,
+    "south": 40.7882,
+    "east": -74.1827,
+    "north": 40.8610
+  },
+  "map_bbox": {
+    "_comment": "Covers today's Montclair Township plus 1839-1868 Bloomfield Township (Bloomfield & Glen Ridge), completely inside the single USGS Paterson (1:62,500) and Orange (1:24,000) quadrangles.",
+    "west": -74.248,
+    "south": 40.762,
+    "east": -74.155,
+    "north": 40.868
+  },
+  "digifind": {
+    "_comment": "Montclair History Online (Montclair Public Library & Montclair History Center) on Digifind-IT: id=2 is City Directories (1870-1969).",
+    "slug": "montclair",
+    "city_directories_id": 2,
+    "realestate_id": null,
+    "realestate_street_id_range": [
+      0,
+      0
+    ],
+    "scrapbooks_id": null
+  },
+  "directories": {
+    "_comment": "Pre-1951 Montclair city directories from Montclair History Online (name cutoff strictly <= 1950).",
+    "codes": {
+      "M": "Montclair",
+      "UM": "Upper Montclair",
+      "MC": "Montclair"
+    },
+    "years": [
+      1910,
+      1912,
+      1914,
+      1920,
+      1923,
+      1925,
+      1929,
+      1931,
+      1933,
+      1935,
+      1937,
+      1939,
+      1941,
+      1945,
+      1947,
+      1949
+    ],
+    "crop_years": [
+      1910,
+      1925,
+      1935,
+      1949
+    ],
+    "name_cutoff_year": 1950,
+    "not_surnames": [
+      "Montclair",
+      "Upper",
+      "Bloomfield",
+      "Glen",
+      "Ridge",
+      "Verona",
+      "Caldwell",
+      "Essex",
+      "Fells",
+      "Orange",
+      "Oranges",
+      "Newark",
+      "Directory",
+      "Price",
+      "Lee",
+      "Baldwin",
+      "Main",
+      "Street",
+      "Avenue",
+      "Road",
+      "Place",
+      "Terrace",
+      "Mrs",
+      "Miss",
+      "Rev",
+      "Dr",
+      "Co",
+      "Inc",
+      "Corp"
+    ]
+  },
+  "topo_layers": {
+    "_comment": "USGS historical topo GeoTIFFs covering Montclair & Bloomfield inside the single Paterson (1:62,500) and Orange (1:24,000) quads. Editions verified via ScienceBase End dates.",
+    "topo1888": {
+      "res": 4,
+      "quads": [
+        [
+          "NJ/NJ_Paterson_255310_1888_62500_geo.tif",
+          -74.25,
+          40.75,
+          -74.0,
+          41.0
+        ]
+      ]
+    },
+    "topo1898": {
+      "res": 4,
+      "quads": [
+        [
+          "NJ/NJ_Paterson_255300_1898_62500_geo.tif",
+          -74.25,
+          40.75,
+          -74.0,
+          41.0
+        ]
+      ]
+    },
+    "topo1906": {
+      "res": 4,
+      "quads": [
+        [
+          "NJ/NJ_Paterson_255304_1903_62500_geo.tif",
+          -74.25,
+          40.75,
+          -74.0,
+          41.0
+        ]
+      ]
+    },
+    "topo1924": {
+      "res": 4,
+      "quads": [
+        [
+          "NJ/NJ_Paterson_255309_1903_62500_geo.tif",
+          -74.25,
+          40.75,
+          -74.0,
+          41.0
+        ]
+      ]
+    },
+    "topo1947": {
+      "res": 2,
+      "quads": [
+        [
+          "NJ/NJ_Orange_254673_1947_24000_geo.tif",
+          -74.25,
+          40.75,
+          -74.125,
+          40.875
+        ]
+      ]
+    },
+    "topo1955": {
+      "res": 2,
+      "quads": [
+        [
+          "NJ/NJ_Orange_254675_1955_24000_geo.tif",
+          -74.25,
+          40.75,
+          -74.125,
+          40.875
+        ]
+      ]
+    },
+    "topo1972": {
+      "res": 2,
+      "quads": [
+        [
+          "NJ/NJ_Orange_254676_1955_24000_geo.tif",
+          -74.25,
+          40.75,
+          -74.125,
+          40.875
+        ]
+      ]
+    },
+    "_editions": "Verified via ScienceBase End dates: Paterson 255310 (1888), 255300 (1898), 255304 (1903 reprint ending 1906), 255309 (1903 reprint ending 1924); Orange 254673 (1947), 254675 (1955 ending 1958), 254676 (1955 photorevised 1972)."
+  },
+  "nj_aerials": [
+    "BlackWhite1930",
+    "Infrared1995",
+    "Natural2007",
+    "Natural2020"
+  ]
+}
